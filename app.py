@@ -3,8 +3,20 @@ import json
 
 # This is where we will make the API using Flask and Python
 # Docs: https://flask.palletsprojects.com/en/3.0.x/
-#Whoever works on this will need to run "pip install flask" in the command line
+# Whoever works on this will need to run "pip install flask" in the command line
 # use comments please n thank youuuuuuuuuuu <3
+
+# PUSHING to main branch: 
+#     -save your work
+#     -git pull origin main 
+
+#   important note: (if you try to push or 
+#                   commit before pulling, 
+#                   bad things happen and 
+#                   I will come after you)
+#     -git add .
+#     -git commit -m "your comment here"
+#     -git push origin main
 
 app = Flask(__name__)
 

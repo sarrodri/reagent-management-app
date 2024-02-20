@@ -17,8 +17,3 @@ class Reagent(db.Model):
     lot_number = db.Column(db.String(50))
     expiration_date = db.Column(db.Date)
     storage_location = db.Column(db.String(100))
-    
-#Metadata and view table object
-metadata = db.MetaData() #extracting the metadata
-division= db.Table('divisions', metadata, autoload=True, autoload_with = "engine")
-print(repr(metadata.tables['divisions']))

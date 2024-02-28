@@ -1,4 +1,4 @@
-# https://docs.sqlalchemy.org/en/20/intro.html SQLAlchemy docs
+# https://flask-sqlalchemy.palletsprojects.com/en/3.1.x/ flask SQLAlchemy docs
 # Note: Whoever works on this will need to run "pip install -U Flask-SQLAlchemy" into this directory
 # Use comments please and thank youuuu
 
@@ -17,3 +17,4 @@ class Reagent(db.Model):
     lot_number = db.Column(db.String(50))
     expiration_date = db.Column(db.Date)
     storage_location = db.Column(db.String(100))
+

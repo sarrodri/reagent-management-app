@@ -1,0 +1,9 @@
+#Title{
+    text-align: center;
+}
+
+#DBWindow{
+    background-color: #e0e0f0;
+    min-width: 500px;
+    min-height: 400px;
+}

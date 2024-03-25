@@ -10,12 +10,20 @@ import os
 #import
 db = sql(app)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://username:password@localhost/reagentLabelDB' # fill in with correct url
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #keeps it from complaining in the console
 
 #Create a reagent class 
 class Reagent(db.Model):
     
-    upc = db.Column(db.Integer(50), nullable=False)
-    name = db.Column(db.String(50))
-    expiration_date = db.Column(db.Date)
-    initials = db.Column(db.String(3))
-
+    # label table
+    upc = db.Column(db.Integer(10), nullable=False)
+    initials = db.Column(db.String(5))
+    openedDate = db.Column(db.Date)
+    expirationDate = db.Column(db.Date)
+    initials = db.Column(db.String(5))
+    lot = db.Column(db.Integer)
+    reagent = db.Column(db.String(50))
+    # reagentExpiration table
+    # reagent is foreign key
+    expiration = db.Column(db.Integer(10))

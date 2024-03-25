@@ -3,18 +3,19 @@
 # Use comments please and thank youuuu
 
 from flask_sqlalchemy import SQLAlchemy as sql
+from sqlalchemy import create_engine
 import app
+import os
 
 #import
 db = sql(app)
 
+
 #Create a reagent class 
 class Reagent(db.Model):
-    # in here, we will shape the data from the api into a database
-    #Example (I think):
     
-    emplid = db.Column(db.String(100), nullable=False)
-    lot_number = db.Column(db.String(50))
+    upc = db.Column(db.Integer(50), nullable=False)
+    name = db.Column(db.String(50))
     expiration_date = db.Column(db.Date)
-    storage_location = db.Column(db.String(100))
+    initials = db.Column(db.String(3))
 

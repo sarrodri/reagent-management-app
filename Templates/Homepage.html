@@ -2,13 +2,13 @@
 <html lang="en-us">
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="WAT.css">
+    <link rel="stylesheet" href="Homepage.css">
     <script src="input.js"></script>
 </head>
 <header>
     <h1 id="Title">Reagent Data</h1>
     <div id="InformationGather">
-    <input type="text" placeholder="Scan Barcode" id="DataForDatabase">
+    Barcode = <input type="text" onfocus= "focus" placeholder="Scan Barcode" id="Barcode Scanner">
     <label for="Month"></label>
         <select name="Month Opened" id="Month">
             <option>Month Opened</option>
@@ -88,7 +88,15 @@
 </header>
 <body>
     <div id="DBWindow">
-
+        <table id="DBTable">
+            <tr>
+                <th class="TableRow">ID</th>
+                <th class="TableRow">Reagent Name</th>
+                <th class="TableRow">Open Date</th>
+                <th class="TableRow">Expiration date</th>
+                <th class="TableRow">Initials</th>
+            </tr>
+        </table>
     </div>
 </body>
 </html>

@@ -10,7 +10,7 @@ import os
 #import
 db = sql(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://username:password@localhost/reagentLabelDB' # fill in with correct url
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://reagent_app:password@localhost/reagentLabelDB' # fill in with correct url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #keeps it from complaining in the console
 
 #Create a reagent class 

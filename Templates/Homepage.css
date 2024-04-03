@@ -3,6 +3,7 @@
 }
 
 #DBWindow{
+    align-self: center;
     background-color: #e0e0f0;
     min-width: 500px;
     min-height: 400px;
@@ -15,4 +16,14 @@
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
+}
+
+#ReagentName{
+    align-content: center;
+    align-self: center;
+}
+
+#Initials{
+    align-content: center;
+    align-self: center;
 }

@@ -3,36 +3,19 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="Homepage.css">
-    <script src="input.js"></script>
+    <link href="app.py" rel="import">
+    <script language="javascript" src="input.js"></script>
 </head>
 <header>
     <h1 id="Title">Reagent Data</h1>
     <div id="InformationGather">
-    Barcode = <input type="text" onfocus= "focus" placeholder="Scan Barcode" id="Barcode Scanner">
-    <label for="Month"></label>
-        <select name="Month Opened" id="Month">
-            <option>Month Opened</option>
-            <option>January</option>
-            <option>February</option>
-            <option>March</option>
-            <option>April</option>
-            <option>May</option>
-            <option>June</option>
-            <option>July</option>
-            <option>August</option>
-            <option>September</option>
-            <option>October</option>
-            <option>November</option>
-            <option>December</option>
-        </select>
-    <label for="Day Opened"></label>
-        <select name="Day" id="Day">
-            <option>Day Opened</option>
-        </select>
+    
+    <!--Barcode = <input type="text" onfocus= "focus" placeholder="Scan Barcode" id="Barcode Scanner"> -->
+    <button type="button" id="Barcode Scanner" onclick="barcodeIn()">Scan Barcode</button>
+    
         <input type="text" placeholder="Time Opened (Hours and Minutes)" id="ClockfaceTime">
     <label for="ReagentName"></label>
         <select name="ReagentName" id="ReagentName">
-            <option>ReagentName</option>
             <option>Reagent1</option>
             <option>Reagent2</option>
             <option>Reagent3</option>

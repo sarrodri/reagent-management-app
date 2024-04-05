@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -8,66 +9,64 @@
 </head>
 <header>
     <h1 id="Title">Reagent Data</h1>
-    <div id="InformationGather">
+    <form action="/home" method="post" id="InformationGather">
     
     <!--Barcode = <input type="text" onfocus= "focus" placeholder="Scan Barcode" id="Barcode Scanner"> -->
     <button type="button" id="Barcode Scanner" onclick="barcodeIn()">Scan Barcode</button>
     
         <input type="text" placeholder="Time Opened (Hours and Minutes)" id="ClockfaceTime">
-    <label for="ReagentName"></label>
+        <label for="ReagentName"></label>
         <select name="ReagentName" id="ReagentName">
-            <option>Reagent1</option>
-            <option>Reagent2</option>
-            <option>Reagent3</option>
-            <option>Reagent4</option>
-            <option>Reagent5</option>
-            <option>Reagent6</option>
-            <option>Reagent7</option>
-            <option>Reagent8</option>
-            <option>Reagent9</option>
-            <option>Reagent10</option>
-            <option>Reagent11</option>
-            <option>Reagent12</option>
-            <option>Reagent13</option>
-            <option>Reagent14</option>
-            <option>Reagent15</option>
-            <option>Reagent16</option>
-            <option>Reagent17</option>
-            <option>Reagent18</option>
-            <option>Reagent19</option>
-            <option>Reagent20</option>
-            <option>Reagent21</option>
-            <option>Reagent22</option>
-            <option>Reagent23</option>
-            <option>Reagent24</option>
-            <option>Reagent25</option>
-            <option>Reagent26</option>
-            <option>Reagent27</option>
-            <option>Reagent28</option>
-            <option>Reagent29</option>
-            <option>Reagent30</option>
-            <option>Reagent31</option>
-            <option>Reagent32</option>
-            <option>Reagent33</option>
-            <option>Reagent34</option>
-            <option>Reagent35</option>
-            <option>Reagent36</option>
-            <option>Reagent37</option>
-            <option>Reagent38</option>
-            <option>Reagent39</option>
-            <option>Reagent40</option>
-            <option>Reagent41</option>
-            <option>Reagent42</option>
-            <option>Reagent43</option>
-            <option>Reagent44</option>
-            <option>Reagent45</option>
-            <option>Reagent46</option>
-            <option>Reagent47</option>
+            
+            {% for reagent_name in reagent_names  %}
+                <option value="{{ reagent_name }}" method="post">{{ reagent_name }}</option>
+            {% endfor %}
+            <!-- <option>L1 UF Heparin</option>
+            <option>L2 UF Heparin</option>
+            <option>L1 LMW Heparin</option>
+            <option>L2 LMW Heparin</option>
+            <option>Low Fib</option>
+            <option>ABN 3</option>
+            <option>Factory Diluent (Aliquaot)</option>
+            <option>Norm 1</option>
+            <option>Diluted Clean B</option>
+            <option>R2g</option>
+            <option>SynthASil</option>
+            <option>CaCl</option>
+            <option>D-Dimer reagent</option>
+            <option>Dimer Latex</option>
+            <option>QFA</option>
+            <option>Anti XA</option>
+            <option>Anti XA-Sub</option>
+            <option>Rinse Solution</option>
+            <option>Cleaning Solution</option>
+            <option>Factory Diluent (Bottle)</option>
+            <option>Cleaning Agent</option>
+            <option>L1 ESR Check</option>
+            <option>L2 ESR Check</option>
+            <option>Anti A</option>
+            <option>Anti B</option>
+            <option>Anti D (Series 4)</option>
+            <option>Anti D (Series 5)</option>
+            <option>Monoclonal Control</option>
+            <option>Panel Screen 1</option>
+            <option>Panel Screen 2</option>
+            <option>Panel Screen 3</option>
+            <option>A Cells</option>
+            <option>B Cells</option>
+            <option>Anti IgG</option>
+            <option>Poly</option>
+            <option>N-Hance</option>
+            <option>PeG</option>
+            <option>Compliment Control</option>
+            <option>Anti C3d</option>
+            <option>Ortho Anti D</option>
+            <option>Check Cell</option> -->
         </select>
         <input type="text" placeholder="Initials" id="Initials">
-        <button onclick="">Submit</button>
-        <button onclick="">Undo</button>
-    </div>
+        <button onclick="SubmitForm()">Submit</button>
+        <button onclick="Undo()">Undo</button>
+    </form>
 </header>
 <body>
     <div id="DBWindow">

@@ -3,27 +3,39 @@
 # Use comments please and thank youuuu
 
 from flask_sqlalchemy import SQLAlchemy as sql
-from sqlalchemy import create_engine
-import app
-import os
+from sqlalchemy import MetaData, create_engine, Table, text, Column, Integer, String, DateTime
+#import app
+#import os
 
 #import
-db = sql(app)
+#db = sql(app)
+engine = create_engine("mysql+pymysql://reagent_app:password@localhost/reagentLabelDB")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://reagent_app:password@localhost/reagentLabelDB' # fill in with correct url
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #keeps it from complaining in the console
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://reagent_app:password@localhost/reagentLabelDB' # fill in with correct url
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #keeps it from complaining in the console
+
+metadata = MetaData()
+    
+label= Table('label',
+                metadata,
+                Column('upc', Integer, primary_key=True),
+                Column('initials', String(5)),
+                Column('lot', Integer),
+                Column('reagent', String(50)),
+                Column('openedDate', DateTime),
+                Column('expirationDate', DateTime)
+                )
+
+metadata.create_all(engine)
+
+#establish connection from engine
+with engine.connect() as connection:
+    #inserting db with mysql script
+
+    result = connection.execute(label.select())
+    for row in result:
+        print(row)
+    result.close()
 
 #Create a reagent class 
-class Reagent(db.Model):
-    
-    # label table
-    upc = db.Column(db.Integer(10), nullable=False)
-    initials = db.Column(db.String(5))
-    openedDate = db.Column(db.Date)
-    expirationDate = db.Column(db.Date)
-    initials = db.Column(db.String(5))
-    lot = db.Column(db.Integer)
-    reagent = db.Column(db.String(50))
-    # reagentExpiration table
-    # reagent is foreign key
-    expiration = db.Column(db.Integer(10))
+#class Reagent(db.Model):

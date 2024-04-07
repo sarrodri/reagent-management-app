@@ -1,11 +1,11 @@
 from flask import Flask, jsonify, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 import json
-from db import Reagent, db
 import datetime as dt, timedelta
 import os
 import random
 from upc_functions import generate_product_number, generate_upc
+from sqlalchemy import MetaData, create_engine, Table, text, Column, Integer, String, DateTime
 
 # This is where we will make the API using Flask and Python
 # Docs: https://flask.palletsprojects.com/en/3.0.x/
@@ -25,6 +25,15 @@ from upc_functions import generate_product_number, generate_upc
 #     -git push origin main
 
 app = Flask(__name__)
+db = SQLAlchemy(app)
+
+class Reagent(db.Model):
+    upc = Column('upc', Integer, primary_key = True),
+    initials = Column('initials', String(5)),
+    lot = Column('lot', Integer),
+    reagent = Column('reagent', String(50)),
+    openedDate = Column('openedDate', DateTime),
+    expiration_date =  Column('expirationDate', DateTime)
 
 # Retrieve all reagents endpoint
 @app.route('/home', methods=['GET'])

@@ -3,7 +3,9 @@
 # Use comments please and thank youuuu
 
 from flask_sqlalchemy import SQLAlchemy as sql
-from sqlalchemy import MetaData, create_engine, Table, text, Column, Integer, String, DateTime
+from sqlalchemy import MetaData, create_engine, Table, text, Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 #import app
 #import os
 
@@ -15,6 +17,7 @@ engine = create_engine("mysql+pymysql://reagent_app:password@localhost/reagentLa
 #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #keeps it from complaining in the console
 
 metadata = MetaData()
+Base = declarative_base()
     
 label= Table('label',
                 metadata,
@@ -24,6 +27,12 @@ label= Table('label',
                 Column('reagent', String(50)),
                 Column('openedDate', DateTime),
                 Column('expirationDate', DateTime)
+                )
+
+reagentExpiration = Table('reagentExpiration',
+                metadata,
+                Column('expiration', Integer),
+                Column('reagent', String(50), ForeignKey('label.reagent'))
                 )
 
 metadata.create_all(engine)
@@ -36,6 +45,3 @@ with engine.connect() as connection:
     for row in result:
         print(row)
     result.close()
-
-#Create a reagent class 
-#class Reagent(db.Model):

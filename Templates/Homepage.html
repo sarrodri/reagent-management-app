@@ -21,47 +21,6 @@
             {% for reagent_name in reagent_names  %}
                 <option value="{{ reagent_name }}" method="post">{{ reagent_name }}</option>
             {% endfor %}
-            <!-- <option>L1 UF Heparin</option>
-            <option>L2 UF Heparin</option>
-            <option>L1 LMW Heparin</option>
-            <option>L2 LMW Heparin</option>
-            <option>Low Fib</option>
-            <option>ABN 3</option>
-            <option>Factory Diluent (Aliquaot)</option>
-            <option>Norm 1</option>
-            <option>Diluted Clean B</option>
-            <option>R2g</option>
-            <option>SynthASil</option>
-            <option>CaCl</option>
-            <option>D-Dimer reagent</option>
-            <option>Dimer Latex</option>
-            <option>QFA</option>
-            <option>Anti XA</option>
-            <option>Anti XA-Sub</option>
-            <option>Rinse Solution</option>
-            <option>Cleaning Solution</option>
-            <option>Factory Diluent (Bottle)</option>
-            <option>Cleaning Agent</option>
-            <option>L1 ESR Check</option>
-            <option>L2 ESR Check</option>
-            <option>Anti A</option>
-            <option>Anti B</option>
-            <option>Anti D (Series 4)</option>
-            <option>Anti D (Series 5)</option>
-            <option>Monoclonal Control</option>
-            <option>Panel Screen 1</option>
-            <option>Panel Screen 2</option>
-            <option>Panel Screen 3</option>
-            <option>A Cells</option>
-            <option>B Cells</option>
-            <option>Anti IgG</option>
-            <option>Poly</option>
-            <option>N-Hance</option>
-            <option>PeG</option>
-            <option>Compliment Control</option>
-            <option>Anti C3d</option>
-            <option>Ortho Anti D</option>
-            <option>Check Cell</option> -->
         </select>
         <input type="text" placeholder="Initials" id="Initials">
         <button onclick="SubmitForm()">Submit</button>
@@ -78,6 +37,9 @@
                 <th class="TableRow">Expiration date</th>
                 <th class="TableRow">Initials</th>
             </tr>
+            {% for reagent_name in reagent_names %}
+            <td class="row" data-upc="{{UPC}}"> "empty"</td>
+            {% endfor %}
         </table>
     </div>
 </body>

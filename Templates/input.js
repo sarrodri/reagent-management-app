@@ -1,6 +1,6 @@
 //look at getElementsByClassName() function for showing the data in the window (index from like 0 to 29)
 //call() function in js for search
-//import
+//import 
 function TempSubmitForm(){
     let ClockFaceTime = document.getElementById('ClockFaceTime').value
     let reagent_names = document.getElementById('reagent_names').value
@@ -8,11 +8,19 @@ function TempSubmitForm(){
     console.log(reagent_names)
 }
 
+ //barcodeIn function will try to find barcodes that are already in the list and information that
+ //corresponds to the barcode that is in the list
 function barcodeIn() {
     let newBarcode = prompt("Scan Barcode");
-    //if newBarcode in barcodeList{
-      //show what it is
-    //}
+    let barcodeFound = false;
+    for (let i = 0; i < barcodeList.length; i++) {
+        alert("Barcode " + newBarcode + "already exists, corresponds to: " + barcodeList[i].value);
+        found = true;
+        break;
+    }
+if (!found) {
+    alert("Barcode " + newBarcode + " is not in the list.")
+}
 }
 
 function SubmitForm(){
@@ -26,12 +34,12 @@ function Undo(){
         UndoValidation()
     }
     else {
-        null
+        return false
     }
 }
 
 function UndoValidation(){
-    
+     
 }
 
 function getReagentNames(reagent_names){

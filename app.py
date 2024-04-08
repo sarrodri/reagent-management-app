@@ -36,7 +36,7 @@ class Reagent(db.Model):
     expiration_date =  Column('expirationDate', DateTime)
 
 # Retrieve all reagents endpoint
-@app.route('/home', methods=['GET'])
+@app.route('/', methods=['POST','GET'])
 def get_reagents():
     today = dt.today().date()
     reagents = Reagent.query.filter(Reagent.expirationDate <= today).all()
@@ -97,13 +97,13 @@ expiration_rules = {
     'Check Cell': None
 }
 
-@app.route('/home', methods=['POST'])
-def get_reagents():
+@app.route('/', methods=['POST'])
+def dropdown():
     reagent_names = list(expiration_rules.keys())  # Extract reagent names from expiration_rules
     return render_template('Homepage.html', reagent_names = reagent_names), 200
 
-
-@app.route('/home', methods=['POST'])
+#add reagent
+@app.route('/', methods=['POST'])
 def add_reagent():
     data = request.json
     reagent = data.get('reagent') #is 'name' a drop down?

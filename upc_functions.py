@@ -19,3 +19,5 @@ def generate_upc(company_prefix, product_number):
     upc = upc_without_check_digit + str(check_digit)
 
     return upc
+
+print(generate_upc(123456,generate_product_number()))

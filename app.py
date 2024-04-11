@@ -33,7 +33,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #keeps it from complaining 
 db.init_app(app)
 
 class Reagent(db.Model):
-    upc = Column('upc', Integer, Primary_Key = True),
+    upc = Column('upc', Integer, primary_key = True),
     initials = Column('initials', String(5)),
     lot = Column('lot', Integer),
     reagent = Column('reagent', String(50)),
@@ -41,7 +41,7 @@ class Reagent(db.Model):
     expiration_date =  Column('expirationDate', DateTime)
 
 # Retrieve all reagents endpoint
-@app.route('/', methods=['POST']) 
+@app.route('/', methods=['POST'])
 def home():
     today = dt.today().date()
     reagents = Reagent.query.filter(Reagent.expirationDate <= today).all()

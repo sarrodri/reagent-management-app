@@ -10,7 +10,7 @@
 <header>
     <img id="MayoLogo" src="mayonayos.png" alt="Mayo Logo">
     <h1 id="Title">Reagent Data</h1>
-    <form action="/home" method="post" id="InformationGather">
+    <form action="/" method="post" id="InformationGather">
     
     <!--Barcode = <input type="text" onfocus= "focus" placeholder="Scan Barcode" id="Barcode Scanner"> -->
     <button type="button" id="Barcode Scanner" onclick="barcodeIn()">Barcode Search</button>
@@ -32,17 +32,18 @@
     <div id="DBWindow">
         <table id="DBTable">
             <tr>
-                <th class="TableRow">ID</th>
+                <th class="TableRow">UPC</th>
                 <th class="TableRow">Reagent Name</th>
                 <th class="TableRow">Open Date</th>
                 <th class="TableRow">Expiration date</th>
                 <th class="TableRow">Initials</th>
-            </tr> # for upc 
+            </tr> 
             {% for reagent in reagents %}
-            <tr><td class="row" data-upc="{{reagent.ID}}"> "empty"</td>
-                <td class="row" data-upc="{{reagent.Name}}"> "empty"</td>
-                <td class="row" data-upc="{{reagent.ExpDate}}"> "empty"</td>
-                <td class="row" data-upc="{{reagent.Initials}}"> "empty"</td>
+            <tr>
+                <td class="row" data-upc="{{reagent.ID}}"> {{reagent.upc}}</td>
+                <td class="row" data-upc="{{reagent.Name}}"> {{reagent.Name}}</td>
+                <td class="row" data-upc="{{reagent.ExpDate}}"> {{reagent.ExpDate}}</td>
+                <td class="row" data-upc="{{reagent.Initials}}"> {{reagent.Initials}}</td>
             </tr> 
             {% endfor %}
             

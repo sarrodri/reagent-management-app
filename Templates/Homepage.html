@@ -10,7 +10,7 @@
 <header>
     <img id="MayoLogo" src="mayonayos.png" alt="Mayo Logo">
     <h1 id="Title">Reagent Data</h1>
-    <form action="/home" method="post" id="InformationGather">
+    <form action="/" method="post" id="InformationGather">
     
     <!--Barcode = <input type="text" onfocus= "focus" placeholder="Scan Barcode" id="Barcode Scanner"> -->
     <button type="button" id="Barcode Scanner" onclick="barcodeIn()">Barcode Search</button>
@@ -18,13 +18,12 @@
         <input type="text" placeholder="Time Opened (Hours and Minutes)" id="ClockfaceTime">
         <label for="ReagentName"></label>
         <select name="ReagentName" id="ReagentName">
-            
             {% for reagent_name in reagent_names  %}
                 <option value="{{ reagent_name }}" method="post">{{ reagent_name }}</option>
             {% endfor %}
         </select>
         <input type="text" placeholder="Initials" id="Initials">
-        <button onclick="SubmitForm()">Submit</button>
+        <input type="submit" value="Submit">
         <button onclick="Undo()">Undo</button>
     </form>
 </header>
@@ -32,17 +31,20 @@
     <div id="DBWindow">
         <table id="DBTable">
             <tr>
-                <th class="TableRow">ID</th>
-                <th class="TableRow">Reagent Name</th>
-                <th class="TableRow">Open Date</th>
-                <th class="TableRow">Expiration date</th>
-                <th class="TableRow">Initials</th>
+                <th class="row">UPC</th>
+                <th class="row">Reagent Name</th>
+                <th class="row">Open Date</th>
+                <th class="row">Expiration date</th>
+                <th class="row">Initials</th>
+                <th class="row">Print</th>
             </tr> # for upc 
             {% for reagent in reagents %}
-            <tr><td class="row" data-upc="{{reagent.ID}}"> "empty"</td>
-                <td class="row" data-upc="{{reagent.Name}}"> "empty"</td>
-                <td class="row" data-upc="{{reagent.ExpDate}}"> "empty"</td>
-                <td class="row" data-upc="{{reagent.Initials}}"> "empty"</td>
+            <tr><td class="row" data-upc="{{reagent.ID}}">{{reagent.ID}}</td>
+                <td class="row" data-upc="{{reagent.Name}}">{{reagent.Name}}</td>
+                <td class="row" data-upc="{{reagent.openDate}}">{reagent.openDate}</td>
+                <td class="row" data-upc="{{reagent.ExpDate}}"> {{reagent.ExpDate}}</td>
+                <td class="row" data-upc="{{reagent.Initials}}">{{reagent.Initials}}</td>
+                <td class="row"><button type="button">Print</button></td>
             </tr> 
             {% endfor %}
             

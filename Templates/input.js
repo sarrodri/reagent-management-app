@@ -13,8 +13,8 @@ function TempSubmitForm(){
 function barcodeIn() {
     let newBarcode = prompt("Scan Barcode");
     let barcodeFound = false;
-    for (let i = 0; i < barcodeList.length; i++) {
-        alert("Barcode " + newBarcode + "already exists, corresponds to: " + barcodeList[i].value);
+    for (let i = 0; i < upc.length; i++) {
+        alert("Barcode " + newBarcode + "already exists, corresponds to: " + upc[i].value);
         found = true;
         break;
     }

@@ -1,16 +1,23 @@
 #Title{
     text-align: center;
+    font-family: 'Lucida Grande', Geneva, sans-serif;
 }
 
 #DBWindow{
     align-self: center;
-    background-color: #e0e0f0;
+    background-color: #e6e6ff;
     min-width: 500px;
     min-height: 400px;
 }
 
-.TableRow{
-    min-width: 20%;
+#DBTable{
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-top: 5px;
+}
+
+.row{
+    width: 16%;
 }
 
 table, th, td {
@@ -21,6 +28,10 @@ table, th, td {
 #MayoLogo{
     max-width: 25%;
     max-height: 25%;
+    text-align: center;
+    align-self: center;
+    align-items: center;
+    align-content: center;
 }
 
 #ReagentName{
@@ -33,18 +44,19 @@ table, th, td {
     align-self: center;
 }
 
-tr:nth-child(odd),th:nth-child(odd){
-    background-color: blue;
+th:nth-child(odd){
+    background-color: #f0f0f0;
 }
 
-tr:nth-child(even),th:nth-child(odd){
-    background-color: teal;
+th:nth-child(even){
+    background-color: #b0b0e0;
 }
 
-tr:nth-child(odd),th:nth-child(even){
-    background-color: aquamarine;
+td:nth-child(odd){
+    background-color: #f0f0f0;
 }
 
-tr:nth-child(even),th:nth-child(even){
-    background-color: navy;
+td:nth-child(even){
+    background-color: #b0b0e0;
 }
+

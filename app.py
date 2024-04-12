@@ -42,33 +42,20 @@ class ReagentExpiration(db.Model):
     __table__ = reagentExpiration
 
 # Retrieve all reagents endpoint
-@app.route('/', methods=['POST'])
-def home():
+@app.route('/', methods=['POST','GET'])
+def get_reagents():
     today = dt.today().date()
     reagents = Reagent.query.filter(Reagent.expirationDate <= today).all()
-    return render_template('Homepage.html', reagents=reagents)
+    return render_template('Homepage.html', reagents=reagents) #send render to actual html page
 
 # Retrieve reagent by specific search (need to decide what to search by, filling in with ID)
 @app.route('/<int:upc>', methods=['GET'])
 def search_reagent(upc):
-    reagent = Reagent.query.get(upc) #will need to return the row
+    reagent = Reagent.query.get(upc)
     if reagent:
         return render_template('Homepage.html', reagent = reagent.serialize())
     else:
         return render_template('Homepage.html', message= 'Reagent not found'), 404
-
-#Print reagent that was searched for 
-@app.route('/<int:upc>', methods=['GET']) #Get and post?
-def print_reagent(upc):
-    reagent = Reagent.query.get(upc)
-    if reagent:        
-        return jsonify({
-            'upc': reagent.upc,
-            'lot': reagent.lot,
-            'expiration_date': reagent.expiration_date if reagent.expiration_date else None
-        }), 200
-    else:
-        return jsonify({'message': 'Reagent not found'}), 404
 
 
 # Define a mapping of reagent names to exp_date
@@ -116,7 +103,7 @@ expiration_rules = {
     'Check Cell': None
 }
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/', methods=['POST'])
 def dropdown():
     reagent_names = list(expiration_rules.keys())  # Extract reagent names from expiration_rules
     return render_template('Homepage.html', reagent_names = reagent_names), 200
@@ -125,23 +112,23 @@ def dropdown():
 @app.route('/', methods=['POST'])
 def add_reagent():
     data = request.json
-    reagent = data.get('reagent') 
+    reagent = data.get('reagent') #is 'name' a drop down?
     initials = data.get('initials')  # Get initials from request data
     lot = data.get('lot')
     openedDate = dt.now() #time stamp for date opened
 
-#  # Generate UPC for the new reagent
-    company_prefix = 123456 
+ # Generate UPC for the new reagent
+    company_prefix = 123456  
     product_number = generate_product_number()
     upc = generate_upc(company_prefix, product_number)
 
-#     # if the reagent name is in the expiration rules
+    # if the reagent name is in the expiration rules
     expiration_date = None
     if reagent in expiration_rules:
         expiration_days = expiration_rules[reagent]
         if expiration_days is not None:  # Check if expiration_days is defined
             expiration_date = dt.now() + timedelta(days=expiration_days)
-# # TODO: Add in error handling because there can't be any null data
+# TODO: Add in error handling because there can't be any null data
     new_reagent = Reagent(openedDate = openedDate, 
                           reagent=reagent, 
                           expirationDate=expiration_date,
@@ -150,18 +137,19 @@ def add_reagent():
                           lot=lot)
     db.session.add(new_reagent)
     db.session.commit()
-    return render_template('Homepage.html', message = 'Reagent added'), 201
+    return render_template('Homepage.html'), 201
+
 
 # delete an existing reagent - retain history of deleted reagents?
 @app.route('/<int:upc>', methods=['DELETE'])
-def delete_reagent(upc): #filled in via scan or text
+def delete_reagent(upc): #filled in via scan
     reagent = Reagent.query.get(upc)
     if reagent:
-        db.session.delete(reagent) #delete the entire row
+        db.session.delete(reagent)
         db.session.commit()
         return render_template('Homepage.html', message = 'Reagent deleted')
     else:
         return render_template('Homepage.html', message='Reagent not found'), 404
 
 if __name__ == '__main__': #don't run debugger in production, only for testing
-     app.run(debug=True)
+    app.run(debug=True)

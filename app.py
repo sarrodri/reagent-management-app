@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 import json
-import datetime as dt, timedelta
+from datetime import datetime as dt, timedelta
 import os
 import random
 from upc_functions import generate_product_number, generate_upc

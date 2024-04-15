@@ -13,9 +13,6 @@ from sqlalchemy.orm import sessionmaker
 #db = sql(app)
 engine = create_engine("mysql+pymysql://reagent_app:password@localhost/reagentLabelDB")
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://reagent_app:password@localhost/reagentLabelDB' # fill in with correct url
-#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #keeps it from complaining in the console
-
 metadata = MetaData()
 Base = declarative_base()
     

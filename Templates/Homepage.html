@@ -3,14 +3,14 @@
 <html lang="en-us">
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="Homepage.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Homepage.css') }}">
     <link href="app.py" rel="import">
     <script language="javascript" src="input.js"></script>
 </head>
 <header>
-    <img id="MayoLogo" src="mayonayos.png" alt="Mayo Logo">
+    <img id="MayoLogo" src="{{ url_for('static', filename='mayonayos.png') }}" alt="Mayo Logo">
     <h1 id="Title">Reagent Data</h1>
-    <form action="/" method="post" id="InformationGather">
+    <form action="/home" method="post" id="InformationGather">
     
     <!--Barcode = <input type="text" onfocus= "focus" placeholder="Scan Barcode" id="Barcode Scanner"> -->
     <button type="button" id="Barcode Scanner" onclick="barcodeIn()">Barcode Search</button>
@@ -31,20 +31,17 @@
     <div id="DBWindow">
         <table id="DBTable">
             <tr>
-                <th class="row">UPC</th>
-                <th class="row">Reagent Name</th>
-                <th class="row">Open Date</th>
-                <th class="row">Expiration date</th>
-                <th class="row">Initials</th>
-                <th class="row">Print</th>
+                <th class="TableRow">ID</th>
+                <th class="TableRow">Reagent Name</th>
+                <th class="TableRow">Open Date</th>
+                <th class="TableRow">Expiration date</th>
+                <th class="TableRow">Initials</th>
             </tr> # for upc 
             {% for reagent in reagents %}
-            <tr><td class="row" data-upc="{{reagent.ID}}">{{reagent.ID}}</td>
-                <td class="row" data-upc="{{reagent.Name}}">{{reagent.Name}}</td>
-                <td class="row" data-upc="{{reagent.openDate}}">{reagent.openDate}</td>
-                <td class="row" data-upc="{{reagent.ExpDate}}"> {{reagent.ExpDate}}</td>
-                <td class="row" data-upc="{{reagent.Initials}}">{{reagent.Initials}}</td>
-                <td class="row"><button type="button">Print</button></td>
+            <tr><td class="row" data-upc="{{reagent.ID}}">{{ reagent.ID }}]</td>
+                <td class="row" data-upc="{{reagent.Name}}"> {{ reagent.Name }}</td>
+                <td class="row" data-upc="{{reagent.ExpDate}}"> {{ reagent.ExpDate }}</td>
+                <td class="row" data-upc="{{reagent.Initials}}"> {{ reagent.Initials }}</td>
             </tr> 
             {% endfor %}
             

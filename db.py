@@ -13,13 +13,10 @@ from sqlalchemy.orm import sessionmaker
 #db = sql(app)
 engine = create_engine("mysql+pymysql://reagent_app:password@localhost/reagentLabelDB")
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://reagent_app:password@localhost/reagentLabelDB' # fill in with correct url
-#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #keeps it from complaining in the console
-
 metadata = MetaData()
 Base = declarative_base()
     
-label= Table('label',
+Reagent = Table('label',
                 metadata,
                 Column('upc', Integer, primary_key=True),
                 Column('initials', String(5)),
@@ -32,7 +29,7 @@ label= Table('label',
 reagentExpiration = Table('reagentExpiration',
                 metadata,
                 Column('expiration', Integer),
-                Column('reagent', String(50), ForeignKey('label.reagent'))
+                Column('reagent', String(50), ForeignKey('label.reagent'), primary_key=True)
                 )
 
 metadata.create_all(engine)
@@ -41,7 +38,7 @@ metadata.create_all(engine)
 with engine.connect() as connection:
     #inserting db with mysql script
 
-    result = connection.execute(label.select())
+    result = connection.execute(Reagent.select())
     for row in result:
         print(row)
     result.close()

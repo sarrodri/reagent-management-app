@@ -1,12 +1,15 @@
 from flask import Flask, jsonify, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 import json
-import datetime as dt, timedelta
+from datetime import datetime as dt, timedelta
 import os
 import random
 from upc_functions import generate_product_number, generate_upc
 from sqlalchemy import MetaData, create_engine, Table, text, Column, Integer, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+from db import Reagent, reagentExpiration
 
+Base = declarative_base()
 # This is where we will make the API using Flask and Python
 # Docs: https://flask.palletsprojects.com/en/3.0.x/
 # Whoever works on this will need to run "pip install flask" in the command line
@@ -33,12 +36,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #keeps it from complaining 
 db.init_app(app)
 
 class Reagent(db.Model):
-    upc = Column('upc', Integer, primary_key = True),
-    initials = Column('initials', String(5)),
-    lot = Column('lot', Integer),
-    reagent = Column('reagent', String(50)),
-    openedDate = Column('openedDate', DateTime),
-    expiration_date =  Column('expirationDate', DateTime)
+    __table__ = Reagent
+
+class ReagentExpiration(db.Model):
+    __table__ = reagentExpiration
 
 # Retrieve all reagents endpoint
 @app.route('/', methods=['POST','GET'])
@@ -48,7 +49,7 @@ def get_reagents():
     return render_template('Homepage.html', reagents=reagents) #send render to actual html page
 
 # Retrieve reagent by specific search (need to decide what to search by, filling in with ID)
-@app.route('/<int:upc>', method=['GET'])
+@app.route('/<int:upc>', methods=['GET'])
 def search_reagent(upc):
     reagent = Reagent.query.get(upc)
     if reagent:

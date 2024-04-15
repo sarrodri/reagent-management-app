@@ -42,11 +42,11 @@ class ReagentExpiration(db.Model):
     __table__ = reagentExpiration
 
 # Retrieve all reagents endpoint
-@app.route('/', methods=['POST','GET'])
+@app.route('/home', methods=['POST','GET'])
 def get_reagents():
     today = dt.today().date()
     reagents = Reagent.query.filter(Reagent.expirationDate <= today).all()
-    return render_template('Homepage.html', reagents=reagents) #send render to actual html page
+    return render_template('/Homepage.html', reagents=reagents) #send render to actual html page
 
 # Retrieve reagent by specific search (need to decide what to search by, filling in with ID)
 @app.route('/<int:upc>', methods=['GET'])
@@ -103,13 +103,13 @@ expiration_rules = {
     'Check Cell': None
 }
 
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['GET','POST'])
 def dropdown():
     reagent_names = list(expiration_rules.keys())  # Extract reagent names from expiration_rules
     return render_template('Homepage.html', reagent_names = reagent_names), 200
 
 #add reagent
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['GET','POST'])
 def add_reagent():
     data = request.json
     reagent = data.get('reagent') #is 'name' a drop down?
@@ -139,9 +139,21 @@ def add_reagent():
     db.session.commit()
     return render_template('Homepage.html'), 201
 
+@app.route('/home/<int:upc>', methods=['POST','GET']) #Get and post?
+def print_reagent(upc):
+    reagent = Reagent.query.get(upc)
+    if reagent:        
+        return jsonify({
+            'upc': reagent.upc,
+            'lot': reagent.lot,
+            'expiration_date': reagent.expiration_date if reagent.expiration_date else None
+        }), 200
+    else:
+        return jsonify({'message': 'Reagent not found'}), 404
+
 
 # delete an existing reagent - retain history of deleted reagents?
-@app.route('/<int:upc>', methods=['DELETE'])
+@app.route('/home/<int:upc>', methods=['DELETE'])
 def delete_reagent(upc): #filled in via scan
     reagent = Reagent.query.get(upc)
     if reagent:

@@ -3,12 +3,12 @@
 <html lang="en-us">
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="Homepage.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Homepage.css') }}">
     <link href="app.py" rel="import">
     <script language="javascript" src="input.js"></script>
 </head>
 <header>
-    <img id="MayoLogo" src="mayonayos.png" alt="Mayo Logo">
+    <img id="MayoLogo" src="{{ url_for('static', filename='mayonayos.png') }}" alt="Mayo Logo">
     <h1 id="Title">Reagent Data</h1>
     <form action="/" method="post" id="InformationGather">
     

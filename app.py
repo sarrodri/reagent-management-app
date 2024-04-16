@@ -46,7 +46,7 @@ class ReagentExpiration(db.Model):
 def get_reagents():
     today = dt.today().date()
     reagents = Reagent.query.filter(Reagent.expirationDate <= today).all()
-    return render_template('/Homepage.html', reagents=reagents) #send render to actual html page
+    return render_template('Homepage.html', reagents=reagents) #send render to actual html page
 
 # Retrieve reagent by specific search (need to decide what to search by, filling in with ID)
 @app.route('/<int:upc>', methods=['GET'])
@@ -139,21 +139,21 @@ def add_reagent():
     db.session.commit()
     return render_template('Homepage.html'), 201
 
-@app.route('/home/<int:upc>', methods=['POST','GET']) #Get and post?
+@app.route('/<int:upc>', methods=['POST','GET']) #Get and post?
 def print_reagent(upc):
     reagent = Reagent.query.get(upc)
     if reagent:        
         return jsonify({
             'upc': reagent.upc,
             'lot': reagent.lot,
-            'expiration_date': reagent.expiration_date if reagent.expiration_date else None
+            'expirationDate': reagent.expirationDate if reagent.expirationDate else None
         }), 200
     else:
         return jsonify({'message': 'Reagent not found'}), 404
 
 
-# delete an existing reagent - retain history of deleted reagents?
-@app.route('/home/<int:upc>', methods=['DELETE'])
+# delete an existing reagent
+@app.route('/<int:upc>', methods=['DELETE'])
 def delete_reagent(upc): #filled in via scan
     reagent = Reagent.query.get(upc)
     if reagent:

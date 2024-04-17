@@ -125,7 +125,8 @@ def add_reagent():
     initials = request.form.get('Initials')  # Get initials from request data
     lot = request.form.get('lotNumber')
     openedDate = dt.now() #time stamp for date opened
-    
+    print("hi method")
+    print(request.method)
  # Generate UPC for the new reagent
     company_prefix = 123456  
     product_number = generate_product_number()

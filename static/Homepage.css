@@ -14,6 +14,7 @@ body{
 }
 
 #DBWindow{
+    justify-content: center;
     align-self: center;
     background-color: #e6e6ff;
     min-width: 500px;
@@ -21,6 +22,7 @@ body{
 }
 
 #DBTable{
+    justify-content: center;
     margin-left: 5px;
     margin-right: 5px;
     padding-top: 5px;

@@ -38,7 +38,15 @@ db.init_app(app)
 class Reagent(db.Model):
     __table__ = Reagent
 
-class ReagentExpiration(db.Model):
+    def __init__(self, upc, initials, lot, reagent, openedDate, expirationDate):
+        self.upc = upc
+        self.initials = initials
+        self.lot = lot
+        self.reagent = reagent
+        self.openedDate = openedDate
+        self.expirationDate = expirationDate
+
+class reagentExpiration(db.Model):
     __table__ = reagentExpiration
 
 # Retrieve all reagents endpoint
@@ -109,14 +117,15 @@ def dropdown():
     return render_template('Homepage.html', reagent_names = reagent_names), 200
 
 #add reagent
+
 @app.route('/', methods=['GET','POST'])
 def add_reagent():
-    data = request.json
-    reagent = data.get('reagent') #is 'name' a drop down?
-    initials = data.get('initials')  # Get initials from request data
-    lot = data.get('lot')
+    
+    reagent = request.form.get('reagent_name') #is 'name' a drop down?
+    initials = request.form.get('Initials')  # Get initials from request data
+    lot = request.form.get('lotNumber')
     openedDate = dt.now() #time stamp for date opened
-
+    
  # Generate UPC for the new reagent
     company_prefix = 123456  
     product_number = generate_product_number()
@@ -129,12 +138,11 @@ def add_reagent():
         if expiration_days is not None:  # Check if expiration_days is defined
             expiration_date = dt.now() + timedelta(days=expiration_days)
 # TODO: Add in error handling because there can't be any null data
-    new_reagent = Reagent(openedDate = openedDate, 
-                          reagent=reagent, 
-                          expirationDate=expiration_date,
-                          initials=initials,
+    new_reagent = Reagent(initials=initials, 
+                          openedDate = openedDate,
+                          expirationDate=expiration_date,                    
                           upc=upc,
-                          lot=lot)
+                          lot=lot, reagent=reagent)
     db.session.add(new_reagent)
     db.session.commit()
     return render_template('Homepage.html'), 201

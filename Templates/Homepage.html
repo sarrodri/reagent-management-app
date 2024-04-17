@@ -15,14 +15,14 @@
     <!--Barcode = <input type="text" onfocus= "focus" placeholder="Scan Barcode" id="Barcode Scanner"> -->
     <button type="button" id="Barcode Scanner" onclick="barcodeIn()">Barcode Search</button>
     
-        <input type="text" placeholder="Lot Number" id="lotNumber">
-        <label for="reagent_names"></label>
-        <select name="reagent_names">
+        <input type="text" placeholder="Lot Number" id="lotNumber" name = "lotNumber">
+        <label for="reagent_name"></label>
+        <select name="reagent_name">
             {% for reagent_name in reagent_names  %}
-                <option value="{{ reagent_name }}" method="post" > {{ reagent_name }} </option>
+                <option value="{{ reagent_name }}" > {{ reagent_name }} </option>
             {% endfor %}
         </select>
-        <input type="text" placeholder="Initials" id="Initials">
+        <input type="text" placeholder="Initials" id="Initials" name="Initials">
         <input type="submit" value="Submit">
         <button onclick="Undo()">Undo</button>
     </form>

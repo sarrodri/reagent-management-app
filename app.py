@@ -37,7 +37,7 @@ db.init_app(app)
 
 class Reagent(db.Model):
     __table__ = Reagent
-
+    
     def __init__(self, upc, initials, lot, reagent, openedDate, expirationDate):
         self.upc = upc
         self.initials = initials
@@ -49,24 +49,10 @@ class Reagent(db.Model):
 class reagentExpiration(db.Model):
     __table__ = reagentExpiration
 
-# Retrieve all reagents endpoint
-@app.route('/home', methods=['POST','GET'])
-def get_reagents():
-    today = dt.today().date()
-    reagents = Reagent.query.filter(Reagent.expirationDate <= today).all()
-    return render_template('Homepage.html', reagents=reagents) #send render to actual html page
+    def __init__(self, reagent,expirationDate):
+        self.reagent = reagent
+        self.expirationDate = expirationDate
 
-# Retrieve reagent by specific search (need to decide what to search by, filling in with ID)
-@app.route('/<int:upc>', methods=['GET'])
-def search_reagent(upc):
-    reagent = Reagent.query.get(upc)
-    if reagent:
-        return render_template('Homepage.html', reagent = reagent.serialize())
-    else:
-        return render_template('Homepage.html', message= 'Reagent not found'), 404
-
-
-# Define a mapping of reagent names to exp_date
 expiration_rules = {
     'L1 UF Heparin': 1,
     'L2 UF Heparin': 1,
@@ -111,24 +97,35 @@ expiration_rules = {
     'Check Cell': None
 }
 
-@app.route('/', methods=['GET','POST'])
-def dropdown():
+# Retrieve all reagents endpoint
+@app.route('/', methods=['POST','GET'])
+def get_reagents():
+    today = dt.today().date()
+    reagents = Reagent.query.filter(Reagent.expirationDate <= today).all()
     reagent_names = list(expiration_rules.keys())  # Extract reagent names from expiration_rules
-    return render_template('Homepage.html', reagent_names = reagent_names), 200
+    return render_template('Homepage.html', reagents=reagents, reagent_names=reagent_names) #send render to actual html page
 
-#add reagent
+# Retrieve reagent by specific search (need to decide what to search by, filling in with ID)
+@app.route('/<int:upc>', methods=['GET'])
+def search_reagent(upc):
+    reagent = Reagent.query.get(upc)
+    if reagent:
+        return render_template('Homepage.html', reagent = reagent.serialize())
+    else:
+        return render_template('Homepage.html', message= 'Reagent not found'), 404
 
-@app.route('/', methods=['GET','POST'])
+
+@app.route('/add', methods=['POST'])
 def add_reagent():
-    
-    reagent = request.form.get('reagent_name') #is 'name' a drop down?
-    initials = request.form.get('Initials')  # Get initials from request data
-    lot = request.form.get('lotNumber')
+    form_data = request.get_json()
+    reagent = form_data.get('reagent_name') #is 'name' a drop down?
+    initials = form_data.get('Initials')  # Get initials from request data
+    lot = form_data.get('lotNumber')
     openedDate = dt.now() #time stamp for date opened
     print("hi method")
     print(request.method)
  # Generate UPC for the new reagent
-    company_prefix = 123456  
+    company_prefix = 123 
     product_number = generate_product_number()
     upc = generate_upc(company_prefix, product_number)
 
@@ -139,14 +136,18 @@ def add_reagent():
         if expiration_days is not None:  # Check if expiration_days is defined
             expiration_date = dt.now() + timedelta(days=expiration_days)
 # TODO: Add in error handling because there can't be any null data
-    new_reagent = Reagent(initials=initials, 
+    new_reagent_expiration = reagentExpiration(reagent=reagent, expirationDate = expiration_date)
+    db.session.add(new_reagent_expiration)
+    db.session.commit()
+
+    new_reagent = Reagent(initials=initials,
                           openedDate = openedDate,
                           expirationDate=expiration_date,                    
                           upc=upc,
                           lot=lot, reagent=reagent)
     db.session.add(new_reagent)
     db.session.commit()
-    return render_template('Homepage.html'), 201
+    return ("Good"), 201
 
 @app.route('/<int:upc>', methods=['POST','GET']) #Get and post?
 def print_reagent(upc):

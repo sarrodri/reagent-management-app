@@ -5,8 +5,8 @@ def generate_product_number():
 
 def generate_upc(company_prefix, product_number):
     # Ensure the company prefix and product number have the correct lengths
-    company_prefix = str(company_prefix).zfill(6)[:6]
-    product_number = str(product_number).zfill(5)[:5]
+    company_prefix = str(company_prefix).zfill(3)[:3]
+    product_number = str(product_number).zfill(3)[:3]
 
     # Concatenate the company prefix and product number
     upc_without_check_digit = company_prefix + product_number
@@ -20,4 +20,4 @@ def generate_upc(company_prefix, product_number):
 
     return upc
 
-print(generate_upc(123456,generate_product_number()))
+print(generate_upc(123,generate_product_number()))

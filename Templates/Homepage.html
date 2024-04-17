@@ -5,7 +5,37 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='Homepage.css') }}">
     <link href="app.py" rel="import">
-    <script language="javascript" src="input.js"></script>
+    <script language="javascript" src="{{ url_for('static', filename='input.js') }}"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#InformationGather').submit(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            var formData = {}; // Initialize an empty object
+    
+            // Iterate over form elements
+            $(this).serializeArray().forEach(function(item) {
+                formData[item.name] = item.value; // Populate formData with form field values
+            });
+    
+            // Send formData as JSON to the server
+            $.ajax({
+                url: '/add', // Endpoint where data should be submitted
+                type: 'POST',
+                contentType: 'application/json', // Set the content type of the request
+                data: JSON.stringify(formData), // Convert formData object to JSON string
+                success: function(response) {
+                    alert('Form submitted successfully!');
+                    console.log(response); // Log response from the server
+                },
+                error: function() {
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        })
+    });
+</script>
 </head>
 <header>
     <img id="MayoLogo" src="{{ url_for('static', filename='mayonayos.png') }}" alt="Mayo Logo">

@@ -18,10 +18,10 @@ Base = declarative_base()
     
 Reagent = Table('label',
                 metadata,
-                Column('upc', Integer, primary_key=True),
+                Column('upc', Integer,primary_key=True, ),
                 Column('initials', String(5)),
                 Column('lot', Integer),
-                Column('reagent', String(50)),
+                Column('reagent', String(50),ForeignKey('reagentExpiration.reagent')),
                 Column('openedDate', DateTime),
                 Column('expirationDate', DateTime)
                 )
@@ -29,7 +29,7 @@ Reagent = Table('label',
 reagentExpiration = Table('reagentExpiration',
                 metadata,
                 Column('expiration', Integer),
-                Column('reagent', String(50), ForeignKey('label.reagent'), primary_key=True)
+                Column('reagent', String(50), primary_key=True)
                 )
 
 metadata.create_all(engine)

@@ -23,9 +23,6 @@ if (!found) {
 }
 }
 
-function SubmitForm(){
-
-}
 
 // The Undo function would be two steps, the Undo would lead to UndoValidation where there would be another prompt before a undoing
 function Undo(){
@@ -36,12 +33,4 @@ function Undo(){
     else {
         return false
     }
-}
-
-function UndoValidation(){
-     
-}
-
-function getReagentNames(reagent_names){
-    reagent_names
 }

@@ -13,25 +13,26 @@
     <form action="/" method="post" id="InformationGather">
     
     <!--Barcode = <input type="text" onfocus= "focus" placeholder="Scan Barcode" id="Barcode Scanner"> -->
-    <button type="button" id="Barcode Scanner" onclick="barcodeIn()">Barcode Search</button>
+    <button type="button" id="Barcode Scanner" onclick="barcodeIn()">Barcode Search</button> <!--Used to scan the barcode that should be equal to the Id and it should pull up the information on the reagent-->
     
-        <input type="text" placeholder="Lot Number" id="lotNumber" name = "lotNumber">
+        <input type="text" placeholder="Lot Number" id="lotNumber" name = "lotNumber"> <!--Used to input the lot number of the reagent (for data purposes)-->
         <label for="reagent_name"></label>
-        <select name="reagent_name">
+        <select name="reagent_name"> <!--Name of the reagent opened, used to tell what formula to calculate expiration date given that it was opened on entry-->
             {% for reagent_name in reagent_names  %}
                 <option value="{{ reagent_name }}" > {{ reagent_name }} </option>
             {% endfor %}
         </select>
-        <input type="text" placeholder="Initials" id="Initials" name="Initials">
+        <input type="text" placeholder="Initials" id="Initials" name="Initials"><!--Input for the initials of the person opening/entering the information-->
         <input type="submit" value="Submit">
-        <button onclick="Undo()">Undo</button>
+        <button onclick="Undo()">Undo</button> <!--used to clear previously entered data-->
     </form>
 </header>
 <body>
     <div id="DBWindow">
-        <table id="DBTable">
-            <tr>
+        <table id="DBTable"> <!--This is where information is displayed-->
+            <tr> <!--Top row is for labels-->
                 <th class="TableRow">UPC</th>
+                <th class="TableRow">Lot Number</th>
                 <th class="TableRow">Reagent Name</th>
                 <th class="TableRow">Open Date</th>
                 <th class="TableRow">Expiration date</th>
@@ -40,6 +41,7 @@
             {% for reagent in reagents %}
             <tr>
                 <td class="row" data-upc="{{reagent.UPC}}">{{ reagent.UPC }}]</td>
+                <td class="row" data-upc="{{reagent.lot}}">{{ reagent.lot }}</td>
                 <td class="row" data-upc="{{reagent.Name}}"> {{ reagent.Name }}</td>
                 <td class="row" data-upc="{{reagent.ExpDate}}"> {{ reagent.ExpDate }}</td>
                 <td class="row" data-upc="{{reagent.Initials}}"> {{ reagent.Initials }}</td>

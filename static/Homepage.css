@@ -1,14 +1,16 @@
 #Title{
     text-align: center;
+    color: #9fbcdc;
+    border: 1px solid #000;
     font-family: 'Lucida Grande', Geneva, sans-serif;
+}
+
+#PrintButton{
+    justify-content: center;
 }
 
 body{
     background-color: #9fbcdc;
-}
-
-#PrintButton{
-    
 }
 
 #DBWindow{
@@ -22,6 +24,14 @@ body{
     margin-left: 5px;
     margin-right: 5px;
     padding-top: 5px;
+}
+
+tr{
+    width: 100%
+}
+
+.TableRow{
+    width: 16%;
 }
 
 .row{
@@ -66,4 +76,3 @@ td:nth-child(odd){
 td:nth-child(even){
     background-color: #b0b0e0;
 }
-

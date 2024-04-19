@@ -1,11 +1,11 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import json
 from datetime import datetime as dt, timedelta
 import os
 import random
 from upc_functions import generate_product_number, generate_upc
-from sqlalchemy import MetaData, create_engine, Table, text, Column, Integer, String, DateTime
+from sqlalchemy import MetaData, create_engine, Table, text, Column, Integer, String, DateTime, or_
 from sqlalchemy.ext.declarative import declarative_base
 from db import Reagent, reagentExpiration
 
@@ -49,9 +49,9 @@ class Reagent(db.Model):
 class reagentExpiration(db.Model):
     __table__ = reagentExpiration
 
-    def __init__(self, reagent,expirationDate):
+    def __init__(self, reagent,expiration):
         self.reagent = reagent
-        self.expirationDate = expirationDate
+        self.expiration = expiration
 
 expiration_rules = {
     'L1 UF Heparin': 1,
@@ -101,7 +101,7 @@ expiration_rules = {
 @app.route('/', methods=['POST','GET'])
 def get_reagents():
     today = dt.today().date()
-    reagents = Reagent.query.filter(Reagent.expirationDate <= today).all()
+    reagents = Reagent.query.filter(or_(Reagent.expirationDate >= today, Reagent.expirationDate == None)).all()
     reagent_names = list(expiration_rules.keys())  # Extract reagent names from expiration_rules
     return render_template('Homepage.html', reagents=reagents, reagent_names=reagent_names) #send render to actual html page
 
@@ -136,7 +136,7 @@ def add_reagent():
         if expiration_days is not None:  # Check if expiration_days is defined
             expiration_date = dt.now() + timedelta(days=expiration_days)
 # TODO: Add in error handling because there can't be any null data
-    new_reagent_expiration = reagentExpiration(reagent=reagent, expirationDate = expiration_date)
+    new_reagent_expiration = reagentExpiration(reagent=reagent, expiration = expiration_date)
     db.session.add(new_reagent_expiration)
     db.session.commit()
 
@@ -147,7 +147,7 @@ def add_reagent():
                           lot=lot, reagent=reagent)
     db.session.add(new_reagent)
     db.session.commit()
-    return ("Good"), 201
+    return redirect(url_for('get_reagents')), 201
 
 @app.route('/<int:upc>', methods=['POST','GET']) #Get and post?
 def print_reagent(upc):

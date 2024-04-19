@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='Homepage.css') }}">
     <link href="app.py" rel="import">
+    <title>Reagent Data</title>
     <script language="javascript" src="{{ url_for('static', filename='input.js') }}"
     ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -67,14 +68,15 @@
                 <th class="TableRow">Open Date</th>
                 <th class="TableRow">Expiration date</th>
                 <th class="TableRow">Initials</th>
-            </tr> 
+            </tr>
             {% for reagent in reagents %}
-            <tr>
-                <td class="row" data-upc="{{reagent.UPC}}">{{ reagent.UPC }}]</td>
-                <td class="row" data-upc="{{reagent.lot}}">{{ reagent.lot }}</td>
-                <td class="row" data-upc="{{reagent.Name}}"> {{ reagent.Name }}</td>
-                <td class="row" data-upc="{{reagent.ExpDate}}"> {{ reagent.ExpDate }}</td>
-                <td class="row" data-upc="{{reagent.Initials}}"> {{ reagent.Initials }}</td>
+           <tr>
+                <td class="row" data-upc="{{reagents.upc}}">{{ reagent.upc }}</td>
+                <td class="row" data-lot="{{reagents.lot}}">{{ reagent.lot }}</td>
+                <td class="row" data-reagent="{{reagents.reagent}}"> {{ reagent.reagent }}</td>
+                <td class="row" data-openedDate="{{reagents.openedDate}}"> {{ reagent.openedDate }}</td>
+                <td class="row" data-expirationDate="{{reagents.expirationDate}}"> {{ reagent.expirationDate }}</td>
+                <td class="row" data-initials="{{reagents.initials}}"> {{ reagent.initials }}</td>
                 <td class="row"><button type="button" id="PrintButton">Print</button></td>
             </tr> 
             {% endfor %}
